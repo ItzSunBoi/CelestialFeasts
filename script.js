@@ -1,24 +1,23 @@
 document.addEventListener("DOMContentLoaded", function () {
-  
-  var container = document.querySelector("#unity-container");
-  var canvas = document.querySelector("#unity-canvas");
-  var loadingBar = document.querySelector("#unity-loading-bar");
-  var progressBarFull = document.querySelector("#unity-progress-bar-full");
-  var fullscreenButton = document.querySelector("#unity-fullscreen-button");
-  var warningBanner = document.querySelector("#unity-warning");
+  const container = document.querySelector("#unity-container");
+  const canvas = document.querySelector("#unity-canvas");
+  const loadingBar = document.querySelector("#unity-loading-bar");
+  const progressBarFull = document.querySelector("#unity-progress-bar-full");
+  const fullscreenButton = document.querySelector("#unity-fullscreen-button");
+  const warningBanner = document.querySelector("#unity-warning");
 
   function unityShowBanner(msg, type) {
     function updateBannerVisibility() {
       warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
     }
-    var div = document.createElement('div');
+    const div = document.createElement('div');
     div.innerHTML = msg;
     warningBanner.appendChild(div);
     if (type === 'error') {
       div.style = 'background: red; padding: 10px;';
     } else if (type === 'warning') {
       div.style = 'background: yellow; padding: 10px;';
-      setTimeout(function () {
+      setTimeout(() => {
         if (warningBanner.contains(div)) {
           warningBanner.removeChild(div);
           updateBannerVisibility();
@@ -28,12 +27,12 @@ document.addEventListener("DOMContentLoaded", function () {
     updateBannerVisibility();
   }
 
-  var buildUrl = "Build";
-  var loaderUrl = buildUrl + "/Celestial Feasts WebGL.loader.js";
-  var config = {
-    dataUrl: "https://pub-c21989cda46e41b1881058890255fe03.r2.dev/Celestial%20Feasts%20WebGL.data",
-    frameworkUrl: buildUrl + "/Celestial Feasts WebGL.framework.js",
-    codeUrl: buildUrl + "/Celestial Feasts WebGL.wasm",
+  const buildUrl = "Build";
+  const loaderUrl = `${buildUrl}/${encodeURIComponent("Celestial Feasts WebGL.loader.js")}`;
+  const config = {
+    dataUrl: "https://pub-c21989cda46e41b1881058890255fe03.r2.dev/" + encodeURIComponent("Celestial Feasts WebGL.data"),
+    frameworkUrl: `${buildUrl}/${encodeURIComponent("Celestial Feasts WebGL.framework.js")}`,
+    codeUrl: `${buildUrl}/${encodeURIComponent("Celestial Feasts WebGL.wasm")}`,
     streamingAssetsUrl: "StreamingAssets",
     companyName: "ItzSunBoi",
     productName: "Celestial Feasts",
@@ -43,14 +42,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
   canvas.style.width = "960px";
   canvas.style.height = "600px";
-
   loadingBar.style.display = "block";
+  progressBarFull.style.width = "0%";
 
-  var script = document.createElement("script");
+  const script = document.createElement("script");
   script.src = loaderUrl;
   script.onload = () => {
     createUnityInstance(canvas, config, (progress) => {
-      progressBarFull.style.width = 100 * progress + "%";
+      const clamped = Math.max(0, Math.min(1, progress));
+      progressBarFull.style.width = `${clamped * 100}%`;
     }).then((unityInstance) => {
       loadingBar.style.display = "none";
 
@@ -59,14 +59,12 @@ document.addEventListener("DOMContentLoaded", function () {
           unityInstance.SetFullscreen(1);
         });
       } else {
-        console.error("Element #unity-fullscreen-button not found in the DOM.");
+        console.warn("Fullscreen button not found.");
       }
-
     }).catch((message) => {
-      alert(message);
+      unityShowBanner(`❌ Unity failed to load: ${message}`, "error");
     });
   };
 
   document.body.appendChild(script);
-
 });
