@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   var buildUrl = "Build";
-  var loaderUrl = buildUrl + "/Celestial Feasts WebGL.loader.js";
+  var loaderUrl = "https://pub-c21989cda46e41b1881058890255fe03.r2.dev/Celestial%20Feasts%20WebGL.data";
   var config = {
     dataUrl: buildUrl + "/Celestial Feasts WebGL.data",
     frameworkUrl: buildUrl + "/Celestial Feasts WebGL.framework.js",
