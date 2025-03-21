@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var buildUrl = "Build";
   var loaderUrl = buildUrl + "/Celestial Feasts WebGL.loader.js";
   var config = {
-    dataUrl: buildUrl + "/Celestial Feasts WebGL.data",
+    dataUrl: "https://github.com/ItzSunBoi/CelestialFeasts/releases/download/Final/Celestial.Feasts.WebGL.data",
     frameworkUrl: buildUrl + "/Celestial Feasts WebGL.framework.js",
     codeUrl: buildUrl + "/Celestial Feasts WebGL.wasm",
     streamingAssetsUrl: "StreamingAssets",
