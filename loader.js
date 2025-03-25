@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   
     const buildUrl = "Build";
-    const buildName = "CelestialFeastsWebGL";
+    const buildName = "Celestial Feasts WebGL";
     const encodedName = encodeURIComponent(buildName);
     const config = {
       dataUrl: `https://pub-c21989cda46e41b1881058890255fe03.r2.dev/${encodedName}.data`,
